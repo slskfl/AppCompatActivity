@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".MainActivity">
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/editNum1"
+        android:hint="숫자 입력1"
+        android:inputType="number"/>
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/editNum2"
+        android:hint="숫자 입력2"
+        android:inputType="number"/>
+    <Button
+        android:id="@+id/btnPlus"
+        style="@style/CustomButton"
+        android:text="더하기"/>
+    <Button
+        android:id="@+id/btnMinus"
+        style="@style/CustomButton"
+        android:text="빼기"/>
+    <Button
+        style="@style/CustomButton"
+        android:id="@+id/btnMulti"
+        android:text="곱하기"/>
+    <Button
+        style="@style/CustomButton"
+        android:id="@+id/btnDiv"
+        android:text="나누기"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/tvResult"
+        android:text="계산 결과 : "
+        android:textSize="25sp"
+        android:textColor="#ff0000"/>
+</LinearLayout>
