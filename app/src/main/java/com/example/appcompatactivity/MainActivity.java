@@ -12,11 +12,11 @@ import android.widget.Toast;
 public class MainActivity extends AppCompatActivity {
 
     EditText editNum1, editNum2;
-    Button btnPlus, btnMinus, btnMulti, btnDiv;
+    Button btnPlus, btnMinus, btnMulti, btnDiv , btnRemainder;
     TextView tvResult;
     int num1, num2;
     String number1, number2;
-    int result;
+    double result;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -28,35 +28,34 @@ public class MainActivity extends AppCompatActivity {
         btnMinus=findViewById(R.id.btnMinus);
         btnMulti=findViewById(R.id.btnMulti);
         btnDiv=findViewById(R.id.btnDiv);
+        btnRemainder=findViewById(R.id.btnRemainder);
         tvResult=findViewById(R.id.tvResult);
 
-        //내부클래스 사용
-        MyListener myListener=new MyListener();
-        btnPlus.setOnClickListener(myListener);
-        btnMinus.setOnClickListener(myListener);
-        btnMulti.setOnClickListener(myListener);
-        btnDiv.setOnClickListener(myListener);
-
-       /* btnPlus.setOnClickListener(new View.OnClickListener() {
+        btnPlus.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-               String num1=editNum1.getText().toString();
-               String num2=editNum2.getText().toString();
-                tvResult.setText("계산결과 :" + (Integer.parseInt(num1)+Integer.parseInt(num2)) );
-            }
-        });
-        btnMinus.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-//                num1=Integer.parseInt(editNum1.getText().toString());
-//                num2=Integer.parseInt(editNum2.getText().toString());
-//                tvResult.setText("계산 결과 : " + (num1-num2));
                 number1=editNum1.getText().toString();
                 number2=editNum2.getText().toString();
                 if(number1.equals("")||number2.equals("")){
                     Toast.makeText(getApplicationContext(),"입력값이 비었습니다.",Toast.LENGTH_SHORT).show();
                 } else {
-                    result=Integer.parseInt(number1)-Integer.parseInt(number2);
+                    result=Double.parseDouble(number1)+Double.parseDouble(number2);
+                    tvResult.setText("계산 결과 : " + result);
+                }
+            }
+        });
+        btnMinus.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                num1=Integer.parseInt(editNum1.getText().toString());
+                num2=Integer.parseInt(editNum2.getText().toString());
+                tvResult.setText("계산 결과 : " + (num1-num2));
+                number1=editNum1.getText().toString();
+                number2=editNum2.getText().toString();
+                if(number1.equals("")||number2.equals("")){
+                    Toast.makeText(getApplicationContext(),"입력값이 비었습니다.",Toast.LENGTH_SHORT).show();
+                } else {
+                    result=Double.parseDouble(number1)-Double.parseDouble(number2);
                     tvResult.setText("계산 결과 : " + result);
                 }
             }
@@ -67,6 +66,12 @@ public class MainActivity extends AppCompatActivity {
                 num1=Integer.parseInt(editNum1.getText().toString());
                 num2=Integer.parseInt(editNum2.getText().toString());
                 tvResult.setText("계산 결과 : " + (num1*num2));
+                if(number1.equals("")||number2.equals("")){
+                    Toast.makeText(getApplicationContext(),"입력값이 비었습니다.",Toast.LENGTH_SHORT).show();
+                } else {
+                    result=Double.parseDouble(number1)*Double.parseDouble(number2);
+                    tvResult.setText("계산 결과 : " + result);
+                }
             }
         });
         btnDiv.setOnClickListener(new View.OnClickListener() {
@@ -79,65 +84,36 @@ public class MainActivity extends AppCompatActivity {
                     if(number1.equals("")||number2.equals("")){
                         Toast.makeText(getApplicationContext(),"입력값이 비었습니다.",Toast.LENGTH_SHORT).show();
                     } else {
-                        result=Integer.parseInt(number1)/Integer.parseInt(number2);
+                        result=Double.parseDouble(number1)/Double.parseDouble(number2);
+                        //소수점 한 자리만 나타내기
+                        result=(int)(result*10)/10.0;
                         tvResult.setText("계산 결과 : " + result);
                     }
                 } catch (java.lang.ArithmeticException e){
                     Toast.makeText(getApplicationContext(), "0으로 나누면 안됩니다.", Toast.LENGTH_SHORT).show();
                 }
             }
-        });*/
+        });
+        btnRemainder.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                try{
+                    number1=editNum1.getText().toString();
+                    number2=editNum2.getText().toString();
+                    if(number1.equals("")||number2.equals("")){
+                        showToast("입력값이 비었습니다.");
+                    } else {
+                        result=Double.parseDouble(number1)%Double.parseDouble(number2);
+                        tvResult.setText("계산 결과 : " + result);
+                    }
+                }catch (java.lang.ArithmeticException e){
+                    showToast("0으로 나누면 안됩니다.");
+                }
+            }
+        });
     }
     //토스트 메서드
     void showToast(String msg){
         Toast.makeText(getApplicationContext(),msg,Toast.LENGTH_SHORT).show();
-    }
-
-    //내부 클래스
-    class MyListener implements View.OnClickListener{
-
-        @Override
-        public void onClick(View v) {
-            number1=editNum1.getText().toString();
-            number2=editNum2.getText().toString();
-            switch (v.getId()) {
-                case R.id.btnPlus:
-                    if (number1.equals("") || number2.equals("")) {
-                        showToast("입력값이 비었습니다.");
-                    } else {
-                        result = Integer.parseInt(number1) + Integer.parseInt(number2);
-                    }
-                    break;
-                case R.id.btnMinus:
-                    if (number1.equals("") || number2.equals("")) {
-                        showToast("입력값이 비었습니다.");
-                    } else {
-                        result = Integer.parseInt(number1) - Integer.parseInt(number2);
-                    }
-                    break;
-                case R.id.btnMulti:
-                    if (number1.equals("") || number2.equals("")) {
-                        showToast("입력값이 비었습니다.");
-                    } else {
-                        result = Integer.parseInt(number1) * Integer.parseInt(number2);
-                    }
-                    break;
-                case R.id.btnDiv:
-                    try {
-                        number1=editNum1.getText().toString();
-                        number2=editNum2.getText().toString();
-                        if(number1.equals("")||number2.equals("")){
-                            showToast("입력값이 비었습니다.");
-                        } else {
-                            result=Integer.parseInt(number1)/Integer.parseInt(number2);
-                            tvResult.setText("계산 결과 : " + result);
-                        }
-                    } catch (java.lang.ArithmeticException e){
-                        Toast.makeText(getApplicationContext(), "0으로 나누면 안됩니다.", Toast.LENGTH_SHORT).show();
-                    }
-                    break;
-            }
-            tvResult.setText("계산 결과 : " + result);
-        }
     }
 }
